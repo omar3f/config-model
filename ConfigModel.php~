@@ -51,21 +51,11 @@ abstract class ConfigModel extends Model
 
     //Set configs. Pass your configs as an associative array of key => value
     public function setConfigs(array $configs) {
-        $count = 0;
         foreach($configs as $config_key => $config_value) {
-            $config = $this->where($this->key_column, $config_key);
-            if (count ($config->get()))  {
-                $config->update([$this->value_column => $config_value]);
-                $count++;
-            } else {
-                $this[$this->key_column] = $config_key;
-                $this[$this->value_column] = $config_value;
-                $this->save();
-                $count++;
-            }
-
+            $this[$this->key_column] = $config_key;
+            $this[$this->value_column] = $config_value;
+            $this->save();
         }
-        return $count;
     }
 
     //Update configs. Pass your configs as an asssociative array of key => new value
